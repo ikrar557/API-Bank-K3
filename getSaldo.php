@@ -9,11 +9,6 @@ if(isset($_GET['idAkun'])){
     $sql = "SELECT * FROM TblAkun WHERE idAkun = $idAkun";
 } else{
     $sql = "SELECT * FROM TblAkun";
-    // if('idAkun'){
-    //     echo "Data tidak ditemukan";
-    // }else{
-        
-    // }
 }
 
 $result = $conn-> query($sql);
@@ -34,16 +29,8 @@ $result = $conn-> query($sql);
            
         } else {
             // Tidak ada data yang ditemukan
-            // echo "Status Sukses" . " " . "Data tidak ditemukan";
             $item = array('status' => 'gagal' , 'Data tidak ditemukan'); // Inisialisasi $item sebagai array kosong
         }
-        // if ($item = array()){
-        //     echo "Status Sukses" . "Data tidak ditemukan";
-        // }
-        // $response = array(
-        //     'status' => 'OK',
-        //     'data' => $item
-        // );
     } else {
         // Penanganan kesalahan jika query tidak berhasil
         throw new Exception("Kesalahan dalam menjalankan query.");
