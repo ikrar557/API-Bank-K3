@@ -25,6 +25,7 @@ if ($result) {
                 'Balance' => $row ["saldo"],
             );
         }
+        // respon untuk ke klien
     } $response = array(
         'status' => 'OK',
         'data' =>$item
