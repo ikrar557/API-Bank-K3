@@ -4,7 +4,6 @@ include "conn.php";
 
 if(isset($_GET['idAkun'])){
     $idAkun = $_GET['idAkun'];
-
     $sql = "SELECT * FROM TblAkun WHERE idAkun = $idAkun";
 } else{
     $sql = "SELECT * FROM TblAkun";
@@ -19,10 +18,10 @@ if ($result) {
         while ($row = $result->fetch_assoc()) {
             // menampilkan data pada database
             $item[] = array(
-                'idAkun' => $row ["idAkun"],
+                'Account' => $row ["idAkun"],
                 'Nama' => $row ["nama"],
-                'norek' => $row ["norek"],
-                'saldo' => $row ["saldo"],
+                'No Rekening' => $row ["norek"],
+                'Balance' => $row ["saldo"],
             );
         }
     } $response = array(
