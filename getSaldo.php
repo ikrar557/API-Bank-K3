@@ -34,5 +34,6 @@ if ($result) {
 } else {
     echo "Terjadi kesalahan dalam query: " . $conn->error;
 }
+    // Convert to array
     echo json_encode($response);
 ?>
