@@ -12,31 +12,12 @@ if(isset($_GET['idAkun'])){
 
 $result = $conn-> query($sql);
 
-// $sql = "SELECT * FROM TblAkun";
-// $query = mysqli_query($conn, $sql);
-
-// if($hasil->$num_row>0){
-//     $data = array();
-//     while($data = $hasil -> fetch_assoc()){
-
-//         $item[] = array(
-//             'idAkun' => $data ["idAkun"],
-//             'Nama' => $data ["nama"],
-//             'norek' => $data ["norek"],
-//             'saldo' => $data ["saldo"],
-//         );
-//     }
-//         $response = array(
-//             'status' => 'OK',
-//             'data' =>$item
-//         );
-    
-// }
 if ($result) {
     // Memeriksa apakah query berhasil dijalankan
     if ($result->num_rows > 0) {
         // Mengambil data dari hasil query
         while ($row = $result->fetch_assoc()) {
+            // menampilkan data pada database
             $item[] = array(
                 'idAkun' => $row ["idAkun"],
                 'Nama' => $row ["nama"],
