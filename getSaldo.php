@@ -2,6 +2,7 @@
 //koneksi ke database
 include "conn.php";
 
+// memeriksa data query pada database
 if(isset($_GET['idAkun'])){
     $idAkun = $_GET['idAkun'];
     $sql = "SELECT * FROM TblAkun WHERE idAkun = $idAkun";
