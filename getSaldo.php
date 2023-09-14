@@ -29,19 +29,24 @@ $result = $conn-> query($sql);
            
         } else {
             // Tidak ada data yang ditemukan
-            $item = array('status' => 'gagal' , 'Data tidak ditemukan'); // Inisialisasi $item sebagai array kosong
+            $item = array('Data tidak ditemukan'); // Inisialisasi $item sebagai array kosong
         }
+        $response = array(
+            'status' => 'OK',
+            'data' =>$item
+        );
+    
     } else {
         // Penanganan kesalahan jika query tidak berhasil
         throw new Exception("Kesalahan dalam menjalankan query.");
     }
 } catch (Exception $e) {
     // Tangani pengecualian yang terjadi
-    $item = array(
+    $response = array(
         'status' => 'Error',
         'message' => $e->getMessage()
     );
 }
     // Convert to array
-    echo json_encode($item);
+    echo json_encode($response);
 ?>
