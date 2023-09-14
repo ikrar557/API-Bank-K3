@@ -31,6 +31,7 @@ $result = $conn-> query($sql);
             // Tidak ada data yang ditemukan
             $item = array('Data tidak ditemukan'); // Inisialisasi $item sebagai array kosong
         }
+        // stastus data
         $response = array(
             'status' => 'OK',
             'Data retrieved sucessfully' =>$item
