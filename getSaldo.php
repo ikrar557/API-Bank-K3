@@ -33,7 +33,7 @@ $result = $conn-> query($sql);
         }
         $response = array(
             'status' => 'OK',
-            'data' , 'Data retrieved sucessfully'=>$item
+            'Data retrieved sucessfully' =>$item
         );
     
     } else {
