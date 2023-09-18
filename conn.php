@@ -1,6 +1,6 @@
 <?php 
 $port = 3306;
-$hostname = "185.73.39.162";
+$hostname = "api.raksakabanyu.my.id";
 $username = "user_bank_api";
 $password = "YyDyKWpa7WxN5kY8";
 $database = "tsa_bank";
