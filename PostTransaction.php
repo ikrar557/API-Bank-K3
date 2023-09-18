@@ -2,12 +2,12 @@
 include "conn.php";
 header('Content-Type: application/json; charset=utf-8');
 
-$idTF= rand(10,1000);
+$idTF= rand(1,10000);
 $idRek = $_POST['norek'];
 $toRek = $_POST['rektujuan'];
 $amount = $_POST['saldo'];
 $date = date('Y-m-d');    
-$status = "400";
+$status = "success";
 
 try {
     $conn->begin_transaction();
@@ -17,7 +17,7 @@ try {
         if ($stmt) {
         
             // Checking amount 
-            $check_balance_sql = "SELECT saldo FROM TblAkun WHERE norek = ?";
+            $check_balance_sql = "SELECT saldo,nama FROM TblAkun WHERE norek = ?";
             $stmt = $conn->prepare($check_balance_sql);
             $stmt->bind_param("i", $toRek);
             $stmt->execute();
@@ -27,6 +27,7 @@ try {
             if ($balance_result->num_rows > 0) {
                 $row = $balance_result->fetch_assoc();
                 $current_balance = $row['saldo'];
+                $receiverName = $row['nama'];
                 
                 if ($current_balance >= $amount) {
                     // Deduct the transfer amount from the source account
@@ -49,7 +50,7 @@ try {
                         'status' => 'success',
                         'message' => 'Transfer berhasil',
                         'data' => array(
-                            'rekasal' => $idRek,
+                            'Nama Penerima' => $receiverName,
                             'Rekening Pengirim'=> $idRek,
                             'Rekening Penerima' => $toRek,
                             'nominal' => 'Rp.'.$amount,
@@ -64,6 +65,7 @@ try {
                 echo json_encode(array('status' => 'error', 'message' => 'Rekening pengirim tidak ditemukan.'));
             }
         } else {
+            var_dump($conn);
             echo json_encode(array('status' => 'error', 'message' => 'Gagal memasukkan data transfer.'));
         }
     }
