@@ -5,9 +5,9 @@ try {
     $transaction = array(); // Inisialisasi array $transaction di luar loop
 
     // memeriksa data query pada database
-    if(isset($_GET['idTransaksi'])){
-        $idTransaksi = $_GET['idTransaksi'];
-        $sql = "SELECT * FROM tblTransaksi WHERE idTransaksi = $idTransaksi";
+    if(isset($_GET['idAkun'])){
+        $idAkun = $_GET['idAkun'];
+        $sql = "SELECT * FROM tblTransaksi WHERE idAkun = $idAkun ORDER BY tanggalTransaksi";
     } else{
         $sql = "SELECT * FROM tblTransaksi";
     }
@@ -21,12 +21,11 @@ try {
             while ($row = $result->fetch_assoc()) {
                 // menambahkan setiap transaksi ke dalam array $transaction
                 $transaction[] = array(
-                    "idTransaksi" => $row["idTransaksi"],
-                    "idAkun" => $row["idAkun"],
-                    "jenistrans" => $row["jenistrans"],
-                    "tanggalTransaksi" => $row["tanggalTransaksi"],
-                    "transmasuk" => $row["transmasuk"],
-                    "transkeluar" => $row["transkeluar"]
+                    "Id Transaksi" => $row["idTransaksi"],
+                    "No Rekening" => $row["norek"],
+                    "Jenis Transaksi" => $row["jenistrans"],
+                    "Tanggal Transaksi" => $row["tanggalTransaksi"],
+                    "Nominal" => $row["nominal"]
                 );
             }
            
@@ -51,6 +50,9 @@ try {
         'message' => $e->getMessage()
     );
 }
+// Set the content type to JSON
+header('Content-Type: application/json; charset=utf-8');
+
 // Convert to array
 echo json_encode($response);
 ?>
