@@ -49,5 +49,13 @@ $result = $conn-> query($sql);
     );
 }
     // Convert to array
-    echo json_encode($response);
+    //echo json_encode($response);
+    // Set the content type as JSON
+header('Content-Type: application/json');
+
+$json_response = json_encode($response, JSON_PRETTY_PRINT);
+
+echo $json_response;
+
+$conn->close();
 ?>
