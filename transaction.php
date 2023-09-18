@@ -5,9 +5,9 @@ try {
     $transaction = array(); // Inisialisasi array $transaction di luar loop
 
     // memeriksa data query pada database
-    if(isset($_GET['idAkun'])){
-        $idAkun = $_GET['idAkun'];
-        $sql = "SELECT * FROM tblTransaksi WHERE idAkun = $idAkun ORDER BY tanggalTransaksi";
+    if(isset($_GET['norek'])){
+        $norek = $_GET['norek'];
+        $sql = "SELECT * FROM tblTransaksi WHERE norek = $norek ORDER BY tanggalTransaksi";
     } else{
         $sql = "SELECT * FROM tblTransaksi";
     }
