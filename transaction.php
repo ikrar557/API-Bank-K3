@@ -1,6 +1,7 @@
 <?php
 //koneksi ke database
 include "conn.php";
+require_once 'auth.php';
 try {
     $transaction = array(); // Inisialisasi array $transaction di luar loop
 
