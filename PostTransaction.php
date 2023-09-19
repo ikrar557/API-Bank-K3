@@ -16,29 +16,46 @@ try {
         $stmt = $sql->execute();
         if ($stmt) {
         
-            // Checking amount 
+            // Check sending amount
             $check_balance_sql = "SELECT saldo,nama FROM TblAkun WHERE norek = ?";
             $stmt = $conn->prepare($check_balance_sql);
-            $stmt->bind_param("i", $toRek);
+            $stmt->bind_param("i", $idRek);
             $stmt->execute();
             $balance_result = $stmt->get_result();
             
+            //get Receiver balance
+            $check_balance_sql = "SELECT nama,saldo FROM TblAkun WHERE norek = ?";
+            $stmt = $conn->prepare($check_balance_sql);
+            $stmt->bind_param("i", $toRek);
+            $stmt->execute();
+            $name_result = $stmt->get_result();
+            $row = $name_result->fetch_assoc();
+            $receiverName = $row['nama'];
+            $receiverBalance = $row['saldo']; 
+            $new_receiver_balance = $receiverBalance + $amount ;
 
             if ($balance_result->num_rows > 0) {
                 $row = $balance_result->fetch_assoc();
-                $current_balance = $row['saldo'];
-                $receiverName = $row['nama'];
-                
-                if ($current_balance >= $amount) {
-                    // Deduct the transfer amount from the source account
-                    $new_balance_source = $current_balance - $amount;
+                $senderBalance = $row['saldo'];
+                $senderName= $row['nama'];
 
-                    // Update the balance of the source account
-                    $update_balance_source_sql = "UPDATE TblAkun SET saldo = ? WHERE norek = ?";
-                    $stmt = $conn->prepare($update_balance_source_sql);
+                if ($senderBalance >= $amount) {
+                    // Deduct the transfer amount from the source account
+                    $new_balance_source = $senderBalance - $amount;
+
+                    // Update saldo Sender
+                    $update_balance_sender = "UPDATE TblAkun SET saldo = ? WHERE norek = ?";
+                    $stmt = $conn->prepare($update_balance_sender);
                     $stmt->bind_param("ii", $new_balance_source, $idRek);
                     $stmt->execute();
 
+                    // Update saldo Receiver
+                    $update_balance_receiver = "UPDATE TblAkun SET saldo = ? WHERE norek = ?";
+                    $stmt = $conn->prepare($update_balance_receiver);
+                    $stmt->bind_param("ii", $new_receiver_balance, $toRek);
+                    $stmt->execute();
+
+                    
                     // Here, you should add the transfer amount to the destination account
                     // You also need to insert transfer data into the transfer table
 
@@ -50,8 +67,9 @@ try {
                         'status' => 'success',
                         'message' => 'Transfer berhasil',
                         'data' => array(
-                            'Nama Penerima' => $receiverName,
+                            'Nama Pengirim' => $senderName,
                             'Rekening Pengirim'=> $idRek,
+                            'Nama Penerima' => $receiverName,
                             'Rekening Penerima' => $toRek,
                             'nominal' => 'Rp.'.$amount,
                         )
