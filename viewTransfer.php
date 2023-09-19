@@ -10,9 +10,15 @@ $response = array(
 
 if (isset($_GET['idTransfer'])) {
     $idTransfer = $_GET['idTransfer'];
-
     $sql = "SELECT * FROM TblTransfer WHERE idTransfer = $idTransfer";
+} elseif (isset($_GET['rektujuan'])) {
+    $rektujuan = $_GET['rektujuan'];
+    $sql = "SELECT * FROM TblTransfer WHERE rektujuan = '$rektujuan'";
+} elseif (isset($_GET['rekasal'])) {
+    $rekasal = $_GET['rekasal'];
+    $sql = "SELECT * FROM TblTransfer WHERE rekasal = '$rekasal'";
 } else {
+    // If no specific query parameters are provided, retrieve all records
     $sql = "SELECT * FROM TblTransfer";
 }
 
@@ -33,10 +39,10 @@ if ($result->num_rows > 0) {
         $data[] = array(
             'idTransfer' => $idTransfer,
             'nominal' => $nominal,
-            'tgltf' => $tgltf,
+            'Tanggal Transfer' => $tgltf,
             'status' => $status,
-            'rekasal' => $rekasal,
-            'rektujuan' => $rektujuan
+            'Rekening Pengirim' => $rekasal,
+            'Rekening Penerima' => $rektujuan
         );
     }
 
