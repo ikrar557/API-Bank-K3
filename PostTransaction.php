@@ -60,7 +60,6 @@ try {
                     // You also need to insert transfer data into the transfer table
 
                     $conn->commit();
-                    $conn->close();
 
 
                     $response = array(
@@ -77,9 +76,11 @@ try {
 
                     echo json_encode($response);
                 } else {
+                    $conn->rollback();
                     echo json_encode(array('status' => 'error', 'message' => 'Saldo tidak mencukupi dalam rekening pengirim.'));
                 }
             } else {
+                $conn->rollback();
                 echo json_encode(array('status' => 'error', 'message' => 'Rekening pengirim tidak ditemukan.'));
             }
         } else {
@@ -87,6 +88,8 @@ try {
             echo json_encode(array('status' => 'error', 'message' => 'Gagal memasukkan data transfer.'));
         }
     }
+    $conn->close();
+
 } catch (mysqli_sql_exception $e) {
     echo "error : " . $e->getMessage();
 }
