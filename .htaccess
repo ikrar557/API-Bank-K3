@@ -1,0 +1,21 @@
+RewriteEngine On
+
+<IfModule mod_rewrite.c>
+  RewriteCond %{HTTP:Authorization} .
+  RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+</IfModule>
+
+# Rewrite https://api.raksakabanyu.my.id/user/viewUser.php to https://api.raksakabanyu.my.id/user/viewUser
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^balance$ /balance.php [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^transactions /transcations.php [L]
+
+RewriteCond %{REQUEST_METHOD} GET
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^transfer /transfer.php [L]
+
+RewriteCond %{REQUEST_METHOD} POST
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^transfer$ postTransfer.php [L]
