@@ -1,7 +1,7 @@
 <?php 
 //koneksi ke database
 include "conn.php";
-
+require_once 'auth.php';
 try {
     // memeriksa data query pada database
 if(isset($_GET['idAkun'])){
